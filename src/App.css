@@ -51,6 +51,43 @@
   }
 }
 
+.chat-log {
+  text-align: left;
+}
+
+.chat-message.chatgpt {
+  background-color: #444654;
+}
+
+.chat-message-center {
+  display: flex;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 12px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.avatar {
+  background-color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.avatar.chatgpt {
+  background-color: #0da37f;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.message {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
 .chat-input-holder {
   padding: 24px;
   position: absolute;
