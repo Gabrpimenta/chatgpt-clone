@@ -1,5 +1,5 @@
-import logo from './logo.svg';
 import './normal.css';
+import icon from './assets/images/openai-icon-505x512.png';
 import './App.css';
 
 function App() {
@@ -21,7 +21,9 @@ function App() {
           </div>
           <div className='chat-message chatgpt'>
             <div className='chat-message-center'>
-              <div className='avatar chatgpt'></div>
+              <div className='avatar chatgpt'>
+                <img src={icon} className='icon' alt='chatgpticon' />
+              </div>
               <div className='message'>I am AI</div>
             </div>
           </div>
