@@ -1,7 +1,7 @@
 import './normal.css';
 import icon from './assets/images/openai-icon-505x512.png';
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ChatMessage = ({ message }) => {
   return (
@@ -19,34 +19,50 @@ const ChatMessage = ({ message }) => {
 };
 
 function App() {
+  useEffect(() => {
+    getEngines();
+  }, []);
   const [input, setInput] = useState('');
   const [chatLog, setChatLog] = useState([
     { message: 'How can I help you today?', user: 'gpt' },
     { message: 'Hi', user: 'me' },
   ]);
+  const clearChat = () => {
+    setChatLog([]);
+  };
+  const getEngines = () => {
+    fetch('http://localhost:3080/models')
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  };
   const handleChange = (e) => {
     setInput(e.target.value);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setChatLog([...chatLog, { message: `${input}`, user: 'me' }]);
-    setInput('');
+    let chatLogNew = [...chatLog, { user: 'me', message: `${input}` }];
+    await setInput('');
+    setChatLog(chatLogNew);
+    const messages = chatLogNew.map((message) => message.message).join(' ');
     const response = await fetch('http://localhost:3080/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        message: chatLog.map((message) => message.message).join(' '),
+        message: messages,
       }),
     });
     const data = await response.json();
-    setChatLog([...chatLog, { message: `${data.message}`, user: 'gpt' }]);
+    await setChatLog([
+      ...chatLogNew,
+      { message: `${data.message}`, user: 'gpt' },
+    ]);
   };
   return (
     <div className='App'>
       <aside className='sidemenu'>
-        <div className='side-menu-button'>
+        <div className='side-menu-button' onClick={clearChat}>
           <span>+</span>
           New chat
         </div>
